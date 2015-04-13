@@ -1,0 +1,40 @@
+package com.trioPlus.supportCenter.exception;
+
+public enum Code {
+	
+	INVALID_SCRATCH_CARD_NUMBER(11),
+	SERVICE_FAILURE(17),
+	TIBCO_NO_DATA_FOUND(1),
+	TIBCO_NUMBER_ALREADY_EXIST(2),
+	TIBCO_ERROR(10),
+	INVALID_FORMAT_MOBILE(21),
+	DB_ERROR(99),
+	HTTP_CONNECTION_ERROR(88),
+	MISSING_PARAMETER(51),
+	INVALID_PARAMETER_VALUE(52),
+	INVALID_DATA_LENGTH(53),
+	USER_NOT_AUTHORIZED(12),
+	NOT_ELIGIBLE(13),
+	NOT_ENOUGH_BALANCE(5),
+	GROUP_ALREADY_EXIST(80),
+	NO_DATE_FOUND(81),
+	NUMBER_ALREADY_EXIST(82),
+	EXPIRED_KEY(19),
+	USER_ALREADY_EXIST(20),
+	NO_CURRENT_MIBUNDLE(100);
+	
+	
+
+	
+	private final Integer value;
+	
+	private Code(Integer value)
+	{
+		this.value=value;
+	}
+	public Integer getValue()
+	{
+		return value;
+	}
+
+}

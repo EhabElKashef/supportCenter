@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+
+	<context:annotation-config />
+	<context:component-scan base-package="com.trioPlus.supportCenter.controller" />
+	<mvc:annotation-driven />
+	<mvc:resources mapping="/resources/**"  location="/resources/" />
+	<mvc:resources mapping="/js/**"  location="/js/" />
+	<mvc:resources mapping="/image/**"  location="/image/" />
+	<!-- <bean
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix">
+			<value>/WEB-INF/pages/</value>
+		</property>
+		<property name="suffix">
+			<value>.jsp</value>
+		</property>
+	</bean> -->
+	
+	<bean id="messageSource"
+		class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+		<property name="basenames">
+			<list>
+				<value>classpath:messages</value>
+			</list>
+		</property>
+		<property name="defaultEncoding" value="UTF-8" />
+	</bean>
+	
+	<bean id="localeResolver"
+			class="org.springframework.web.servlet.i18n.CookieLocaleResolver">
+		<property name="cookieName" value="servicesToolsClientlanguage" />
+		<property name="cookieMaxAge" value="100000" />
+		<property name="defaultLocale" value="en" />
+	</bean>
+
+<!--  	<interceptors>
+		<bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
+			<property name="paramName" value="lang" />
+		</bean>
+		
+		<interceptor>
+			<mapping path="/**" />
+			<bean id="noCacheWebContentInterceptor"
+				class="org.springframework.web.servlet.mvc.WebContentInterceptor">
+				<property name="cacheSeconds" value="0" />
+				<property name="useExpiresHeader" value="true" />
+				<property name="useCacheControlHeader" value="true" />
+				<property name="useCacheControlNoStore" value="true" />
+			</bean>
+		</interceptor>
+		
+		<interceptor> 
+	        <mapping path="/**"/>  
+	        
+	  		<bean class="com.vis.redirector.exceptionHandler.LastModelAndViewInterceptor" id="loggerInterceptor"/>
+	  		
+	    </interceptor> 
+		
+		
+	</interceptors>-->
+	
+	
+	<bean name="myExceptionResolver" class="com.trioPlus.supportCenter.utils.CustomSimpleMappingExceptionResolver">
+	    <property name="exceptionMappings">
+	        <props>	            
+	            <prop key="java.lang.Exception">error.page</prop>
+	        </props>
+	    </property>
+	</bean>
+	
+
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
+		destroy-method="close">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+		<property name="url" value="jdbc:mysql://localhost:3306/booking_system_schema" />
+		<property name="username" value="root" />
+		<property name="password" value="root123" />
+	</bean>
+	<bean id="viewResolver"
+		class="org.springframework.web.servlet.view.tiles3.TilesViewResolver" />
+
+	<bean id="tilesConfigurer"
+		class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">
+		<property name="definitions">
+			<list>
+				<value>/WEB-INF/layouts/layouts.xml</value>
+				<value>/WEB-INF/layouts/views.xml</value>
+			</list>
+		</property>
+	</bean>
+
+	<!-- Hibernate 3 XML SessionFactory Bean definition -->
+	<!-- <bean id="hibernate3SessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean"> 
+		<property name="dataSource" ref="dataSource" /> <property name="mappingResources"> 
+		<list> <value>person.hbm.xml</value> </list> </property> <property name="hibernateProperties"> 
+		<value> hibernate.dialect=org.hibernate.dialect.MySQLDialect </value> </property> 
+		</bean> -->
+
+	<!-- Hibernate 3 Annotation SessionFactory Bean definition -->
+	<bean id="hibernate3AnnotatedSessionFactory"
+		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="annotatedClasses">
+			<list>
+				<value>com.trioPlus.supportCenter.entity.User</value>
+				<value>com.trioPlus.supportCenter.entity.UserCar</value>
+				<value>com.trioPlus.supportCenter.entity.UserVerification</value>
+				<value>com.trioPlus.supportCenter.entity.CarModel</value>
+				<value>com.trioPlus.supportCenter.entity.CarType</value>
+				<value>com.trioPlus.supportCenter.entity.BookingType</value>
+				<value>com.trioPlus.supportCenter.entity.Booking</value>				
+				<value>com.trioPlus.supportCenter.entity.Offer</value>
+			</list>
+		</property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+				<prop key="hibernate.current_session_context_class">thread</prop>
+				<prop key="hibernate.show_sql">true</prop>
+			</props>
+		</property>
+	</bean>
+	 <bean class="org.springframework.web.servlet.view.XmlViewResolver">
+	   <property name="location">
+	       <value>/WEB-INF/spring-excel-views.xml</value>
+	   </property>
+	   <property name="order" value="0" />
+	</bean>
+	
+	<bean id="supportCenterUserDAO" class="com.trioPlus.supportCenter.daoImp.SupportCenterUserDAOImpl">
+		<property name="sessionFactory" ref="hibernate3AnnotatedSessionFactory" />
+	</bean>
+	<bean id="userVerificationDAO" class="com.trioPlus.supportCenter.daoImp.UserVerificationDAOImpl">
+		<property name="sessionFactory" ref="hibernate3AnnotatedSessionFactory" />
+	</bean>
+	
+	
+	<bean id="dataService" class="com.trioPlus.supportCenter.services.DataServiceImpl">
+	</bean>
+	</beans>
+

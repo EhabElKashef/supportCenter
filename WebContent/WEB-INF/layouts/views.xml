@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC
+	"-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+	"http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+<tiles-definitions>
+
+	<definition name="landing" extends="DefaultTemplate">
+	    <put-attribute name="body"	value="/WEB-INF/views/index.jsp" />
+	</definition>
+
+	<definition name="user" extends="DefaultTemplate">
+	    <put-attribute name="body"	value="/pages/user.jsp" />
+	</definition>
+	<definition name="constraints" extends="DefaultTemplate">
+	    <put-attribute name="body"	value="/pages/constraints.jsp" />
+	</definition>
+	<definition name="project" extends="DefaultTemplate">
+	    <put-attribute name="body"	value="/pages/project.jsp" />
+	</definition>
+	<definition name="stakeHolder" extends="DefaultTemplate">
+	    <put-attribute name="body"	value="/pages/stakeHolder.jsp" />
+	</definition>
+	
+	<definition name="cost" extends="DefaultTemplate">
+	    <put-attribute name="body"	value="/pages/cost.jsp" />
+	</definition>
+	
+	<definition name="login" extends="DefaultTemplate">
+	    <put-attribute name="body"	value="/pages/login.jsp" />
+	</definition>
+	<definition name="denied" extends="DefaultTemplate">
+	    <put-attribute name="body"	value="/pages/denied.jsp" />
+	</definition>
+	<definition name="travelForm" extends="DefaultTemplate">
+	    <put-attribute name="body"	value="/pages/travelForm.jsp" />
+	</definition>
+	<definition name="travelList" extends="DefaultTemplate">
+	    <put-attribute name="body"	value="/pages/listTravel.jsp" />
+	</definition>
+	
+	<definition name="reportList" extends="DefaultTemplate">
+	    <put-attribute name="body"	value="/pages/listReport.jsp" />
+	</definition>
+	
+	
+	<definition name="reports" extends="DefaultTemplate">
+	    <put-attribute name="body"	value="/pages/reports.jsp" />
+	</definition>
+	
+	
+	<definition name="error.page" extends="DefaultTemplate">
+		
+		<put-attribute name="body" value="/pages/commonError.jsp" />
+	</definition>
+	
+</tiles-definitions>
